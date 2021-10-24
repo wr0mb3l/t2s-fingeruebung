@@ -5,11 +5,17 @@
 from pathlib import Path
 
 
-def fromXML(path: Path,):
-    """Loads a given XML files contents and returns string.
+def load(path: Path):
+    """Loads Content of given File to string.
 
     Args:
-        path (str): Path to XML file starting in src/data.
+        path (Path): Path to file.
+
+    Raises:
+        FileNotFoundError: File was not found or is empty.
+
+    Returns:
+        str: Content.
     """
 
     content = ""
@@ -19,18 +25,29 @@ def fromXML(path: Path,):
         raise FileNotFoundError()
 
 
+def save(path: Path, data: str):
+    """Saves given data in file.
+
+    Args:
+        path (Path): Path to file, starting in src/data.
+        data (str): Data to save.
+    """
+    with open(Path(Path(__file__).parent.resolve(), path), "w") as f:
+        f.write(data)
+
+
 def main():
     """Short usage example.
     """
-    print("loadsave.py\n"+__doc__ + "\n")
+    print("loadsave.py\n" + __doc__ + "\n")
 
     content = ""
     try:
-        content = fromXML("training-data/Traning/RFC/Bicycles.xml")
+        content = load("training-data/Traning/RFC/Bicycles.xml")
         print(content)
     except FileNotFoundError as e:
         print(e)
 
+
 if __name__ == "__main__":
     main()
-

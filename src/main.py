@@ -7,6 +7,7 @@ Generated Data can then be saved in XML again.
 
 import data.loadsave
 import data.parser
+import nlp.analyzer
 
 
 def main():
@@ -14,15 +15,23 @@ def main():
     """
     print("main.py\n"+__doc__)
     
-    # Load XML content from file
+    # Load XML content from file and convert to dictionary
     content = ""
     try:
-        content = data.loadsave.load("training-data/Traning/RFC/Bicycles.xml")
-        # data.loadsave.save("json/Bicycles.json", data.parser.XMLtoJSON(content))
+        content = data.parser.xml_to_dict(
+            data.loadsave.load("training-data/Traning/RFC/Bicycles.xml")
+        )["spaceevaltaskv1.2"]
     except FileNotFoundError as e:
         print(e)
 
-    # Add Language Analysis    
+    # Add Language Analysis
+    try:
+        content["tags"]["token"] = nlp.analyzer.analyze(content["text"])
+    except Exception as e:
+        print(e)
+
+    # Save as JSON
+    data.loadsave.save("json/RFC/Bicycles.json", data.parser.dict_to_json(content))
 
 
 if __name__ == "__main__":

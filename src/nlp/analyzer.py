@@ -4,13 +4,23 @@
 
 import spacy
 
+# NLP Pipeline
 __nlp = spacy.load("en_core_web_sm")
 
 
 def analyze(content: str):
+    """Analyzes string wth NLP Pipeline and returns Token/POS info.
+
+    Args:
+        content (str): String to analyze.
+
+    Returns:
+        [dict]: Array of Dictionaries containing useful information.
+    """
     doc = __nlp(content)
     result = []
     id = 0
+    # Convert all tokens to Documents and accumulate in result.
     for token in doc:
         result.append({"id": id,
                       "start": token.i,

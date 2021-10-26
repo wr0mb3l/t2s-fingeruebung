@@ -3,6 +3,7 @@
 """
 
 from pathlib import Path
+import os
 
 
 def load(path: Path):
@@ -32,7 +33,11 @@ def save(path: Path, data: str):
         path (Path): Path to file, starting in src/data.
         data (str): Data to save.
     """
-    with open(Path(Path(__file__).parent.resolve(), path), "w") as f:
+    full_path = Path(Path(__file__).parent.resolve(), path)
+    # Create dirs if necessary
+    os.makedirs(str(full_path.parent))
+
+    with open(full_path, "w") as f:
         f.write(data)
 
 

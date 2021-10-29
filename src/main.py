@@ -8,6 +8,7 @@ Generated Data can then be saved in XML again.
 import data.loadsave
 import data.parser
 import nlp.analyzer
+import stats.stats
 
 
 def main():
@@ -19,7 +20,7 @@ def main():
     content = ""
     try:
         content = data.parser.xml_to_dict(
-            data.loadsave.load("training-data/Traning/RFC/Bicycles.xml")
+            data.loadsave.load("training-data/Traning/CP/45_N_22_E.xml")
         )["spaceevaltaskv1.2"]
     except FileNotFoundError as e:
         print(e)
@@ -31,7 +32,10 @@ def main():
         print(e)
 
     # Save as JSON
-    data.loadsave.save("json/RFC/Bicycles.json", data.parser.dict_to_json(content))
+    # data.loadsave.save("json/CP/45_N_22_E.json", data.parser.dict_to_json(content))
+
+    # Print some stats
+    print(stats.stats.isospace_count(content["tags"]))
 
 
 if __name__ == "__main__":

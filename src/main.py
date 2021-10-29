@@ -15,12 +15,14 @@ def main():
     """Quick usage example.
     """
     print("main.py\n"+__doc__)
+
+    path = "RFC/Bicycles"
     
     # Load XML content from file and convert to dictionary
     content = ""
     try:
         content = data.parser.xml_to_dict(
-            data.loadsave.load("training-data/Traning/CP/45_N_22_E.xml")
+            data.loadsave.load("training-data/Traning/" + path + ".xml")
         )["spaceevaltaskv1.2"]
     except FileNotFoundError as e:
         print(e)
@@ -32,10 +34,13 @@ def main():
         print(e)
 
     # Save as JSON
-    # data.loadsave.save("json/CP/45_N_22_E.json", data.parser.dict_to_json(content))
+    data.loadsave.save("json/" + path + ".json", data.parser.dict_to_json(content))
+
+    # Load from JSON
+    content = data.parser.json_to_dict(data.loadsave.load("json/" + path + ".json"))
 
     # Print some stats
-    print(stats.stats.isospace_count(content["tags"]))
+    print(stats.stats.qslink_types(content["tags"]["qslink"]))
 
 
 if __name__ == "__main__":

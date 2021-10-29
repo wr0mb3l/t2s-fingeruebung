@@ -50,6 +50,18 @@ def dict_to_json(dic: dict):
     return json.dumps(dic)
 
 
+def json_to_dict(json_str: str):
+    """Converts Python Dictionary JSON string.
+
+    Args:
+        json_str (str): string to convert into dictionary.
+
+    Returns:
+        dict: Dictionary.
+    """
+    return json.loads(json_str)
+
+
 def main():
     """Quick usage example.
     """

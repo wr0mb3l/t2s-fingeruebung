@@ -35,7 +35,10 @@ def save(path: Path, data: str):
     """
     full_path = Path(Path(__file__).parent.resolve(), path)
     # Create dirs if necessary
-    os.makedirs(str(full_path.parent))
+    try:
+        os.makedirs(str(full_path.parent))
+    except FileExistsError as e:
+        pass
 
     with open(full_path, "w") as f:
         f.write(data)

@@ -65,14 +65,14 @@ def show_network_graph(tags: dict):
     nx.draw_networkx_nodes(g, pos, **options)
 
     # edges
-    nx.draw_networkx_edges(g, pos, width=1.0, alpha=0.5,
+    nx.draw_networkx_edges(g, pos, width=1.0, alpha=0.5, node_size=100,
                            edge_color=["r" if x[2]["type"] == "qslink" else "b" for x in edges])
 
     # labels
     nx.draw_networkx_labels(g, pos, {x: vertices[x]["label"] for x in g.nodes}, font_size=4, font_color="black")
     nx.draw_networkx_edge_labels(g, pos,
                                  edge_labels={(x[0], x[1]): x[2]["label"] for x in edges},
-                                 font_size=2)
+                                 font_size=4)
 
 
 def main():
@@ -83,3 +83,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

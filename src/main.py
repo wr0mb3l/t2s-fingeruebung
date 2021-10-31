@@ -2,13 +2,24 @@
 """Text2Scene Pratkikum WiSe 21-22 Fingerübung.
 
 Reads IsoSpace XML-Data from Files, tokenizes and tags read data using Spacy.
-Generated Data can then be saved in XML again.
+Collected Data can then be saved in JSON.
+Includes some crude analysis tools and a visualizer to show a network graph of the XML contents.
 """
 
 import data.loadsave
 import data.parser
 import nlp.analyzer
-import stats.stats
+import eval.stats
+import eval.visualizer
+import matplotlib.pyplot as plt
+from pathlib import Path
+
+
+def printable_dict(dic: dict):
+    result = ""
+    for k in dic.keys():
+        result += k + ":  " + str(dic[k]) + "\n"
+    return result
 
 
 def main():
@@ -17,7 +28,7 @@ def main():
     print("main.py\n"+__doc__)
 
     path = "RFC/Bicycles"
-    
+
     # Load XML content from file and convert to dictionary
     content = ""
     try:
@@ -40,7 +51,20 @@ def main():
     content = data.parser.json_to_dict(data.loadsave.load("json/" + path + ".json"))
 
     # Print some stats
-    print(stats.stats.qslink_types(content["tags"]["qslink"]))
+    print("PoS counts:\n" + printable_dict(eval.stats.pos_count(content["tags"])))
+    print("\n\nIsoSpace tag counts:\n" + printable_dict(eval.stats.iso_space_count(content["tags"])))
+    print("\n\nQsLink Type counts:\n" + printable_dict(eval.stats.qs_link_types(content["tags"])))
+    print("\n\nQsLink preposition counts:")
+    link_prep_count = eval.stats.link_prepositions_count(content["tags"])
+    print("Qslink Triggers:\n" + printable_dict(link_prep_count["qslink"]))
+    print("OLink Triggers:\n" + printable_dict(link_prep_count["olink"]))
+    print("\n\n5 most common motion verbs:\n" + printable_dict(eval.stats.most_common_motion_verbs(content["tags"])))
+
+    eval.visualizer.show_network_graph(content["tags"])
+
+    plt.tight_layout()
+    plt.axis("off")
+    plt.savefig(Path(Path(__file__).parent.resolve(), "data/json/" + path + ".png"), dpi=400)
 
 
 if __name__ == "__main__":

@@ -2,7 +2,6 @@
 """Visualizer for collected data.
 """
 
-import matplotlib.pyplot as plt
 import networkx as nx
 import matplotlib as mpl
 
@@ -38,8 +37,6 @@ def show_network_graph(tags: dict):
                         edges[e]["fromid"] = l["toid"]
                     elif edges[e]["toid"] == l["fromid"]:
                         edges[e]["toid"] = l["toid"]
-                # Adjust vertex
-                # vertices[l["toid"]]["label"] += ", " + vertices[l["fromid"]]["label"]
     except KeyError as e:
         pass
 
@@ -76,10 +73,6 @@ def show_network_graph(tags: dict):
     nx.draw_networkx_edge_labels(g, pos,
                                  edge_labels={(x[0], x[1]): x[2]["label"] for x in edges},
                                  font_size=2)
-
-    plt.tight_layout()
-    plt.axis("off")
-    plt.savefig("test.png", dpi=400)
 
 
 def main():

@@ -13,7 +13,7 @@ def pos_count(tags: dict):
     """
 
     stats = {}
-    for token in tags["tokens"]:
+    for token in tags["token"]:
         if token["pos"] in stats.keys():
             stats[token["pos"]] += 1
             continue
@@ -47,7 +47,7 @@ def qs_link_types(tags: dict):
     """
 
     stats = {}
-    for link in tags["links"]:
+    for link in tags["qslink"]:
         if link["reltype"] in stats.keys():
             stats[link["reltype"]] += 1
             continue
@@ -59,9 +59,9 @@ def sentence_lengths(tags: dict):
     """Counts sentence lengths from list of tokens.
 
     Args:
-        tags (dict): Tags containing QS-Links.
+        tags (dict): Tags containing tokens with sentence start markers.
     Returns:
-        dict: Dictionary with QS-Link types as keys and counts as values.
+        dict: Dictionary with Sentence length as keys and counts as values.
     """
 
     stats = {}
@@ -93,15 +93,36 @@ def link_prepositions_count(tags: dict):
     """Counts Prepositions that triggered QS/O-Links.
 
     Args:
+        tags (dict): Tags containing information.
+    Returns:
+        dict: Contains dictionaries with 2 keys, "qslink" and "olink, both containing more info.
+    """
+    stats = {"qslink": {}, "olink": {}}
+    for name in stats.keys():
+        for e in tags[name]:
+            prepositions = [x["text"] for x in tags["spatial_signal"] if x["id"] == e["trigger"]]
+            if not prepositions:
+                continue
+            prep = prepositions[0]
+            if prep in stats[name].keys():
+                stats[name][prep] += 1
+                continue
+            stats[name][prep] = 1
+
+    return stats
+
+
+def most_common_motion_verbs(tags: dict):
+    """Returns 5 most common motion verbs.
+
+    Args:
         tags (dict): Tags containing motion-verbs.
     Returns:
         dict: Contains the most-used verbs as keys and their counts as values.
     """
-
     count = {}
     # Count all motion verbs.
     for verb in tags["motion"]:
-        print(verb)
         if verb["text"] in count.keys():
             count[verb["text"]] += 1
             continue
@@ -114,7 +135,7 @@ def link_prepositions_count(tags: dict):
         return count[v]
 
     verbs.sort(key=appearances)
-    return {i: count[i] for i in verbs}
+    return {i: count[i] for i in verbs[:5]}
 
 
 def main():

@@ -130,15 +130,15 @@ The sentence lengths are visualized as a bar chart in `src/sentence-lengths.png`
 The compiled graphs are placed in `src/data/json/...`.
 
 Colors are as follows:
-- <span style="color:#198C75">Places</span>
-- <span style="color:#40A066">Locations</span>
-- <span style="color:#8CC675">Spatial Entities</span>
-- <span style="color:#86E375">Non-Motion Event</span>
-- <span style="color:#FFFF75">Path</span>
+- ![#198c75](https://via.placeholder.com/15/198c75/000000?text=+) Places
+- ![#40a066](https://via.placeholder.com/15/40a066/000000?text=+) Locations
+- ![#8cc675](https://via.placeholder.com/15/8cc675/000000?text=+) Spatial Entities
+- ![#86e375](https://via.placeholder.com/15/86e375/000000?text=+) Non-Motion Events
+- ![#FFFF75](https://via.placeholder.com/15/FFFF75/000000?text=+) Paths
 
 Edge Colors are:
-- <span style="color:#FF7F7F">QSLink</span>
-- <span style="color:#7F7FFF">OLink</span>
+- ![#ff7f7f](https://via.placeholder.com/15/ff7f7f/000000?text=+) QSLink
+- ![#7f7fff](https://via.placeholder.com/15/7f7fff/000000?text=+) OLink
 
 `RFC/Bicycles.xml`:
 ![Bicycles-graph](doc/Bicycles.png)

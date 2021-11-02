@@ -62,6 +62,7 @@ def show_network_graph(tags: dict):
                "node_size": 100,
                "alpha": 0.9,
                "node_color": [mapper.to_rgba(i) for i in color_lookup.values()]}
+    print(mapper.to_rgba(1))
     nx.draw_networkx_nodes(g, pos, **options)
 
     # edges
@@ -72,7 +73,7 @@ def show_network_graph(tags: dict):
     nx.draw_networkx_labels(g, pos, {x: vertices[x]["label"] for x in g.nodes}, font_size=4, font_color="black")
     nx.draw_networkx_edge_labels(g, pos,
                                  edge_labels={(x[0], x[1]): x[2]["label"] for x in edges},
-                                 font_size=4)
+                                 font_size=2)
 
 
 def main():
